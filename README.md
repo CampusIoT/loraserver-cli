@@ -1,9 +1,6 @@
 # CLI for the LoRa App Server
 
-## Generate the bash client and HTML doc with Swagger CodeGen
-```bash
-./generate.sh
-```
+
 
 ## Bulk loading of gateways and endpoints 
 ```bash
@@ -28,4 +25,22 @@ name,TODO
 Example of endpoints.csv
 ```bash
 name,deveui,appkey,TODO
+```
+
+## Useful utilities
+* https://www.npmjs.com/package/csvtojson
+* https://www.npmjs.com/package/jsontocsv
+
+```bash
+sudo npm install -g csvtojson
+csvtojson --help
+sudo npm install -g jsontocsv
+jsontocsv --help
+```
+
+
+## @Deprecated: Generate the bash client and HTML doc with Swagger CodeGen
+Deprecated since the generated client had several times the same function for operations with the same name (ie list, delete, ...)
+```bash
+./generate.sh
 ```
