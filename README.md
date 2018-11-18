@@ -5,8 +5,7 @@
 ./generate.sh
 ```
 
-## Gateways and Endpoints Bulk Loading
-
+## Bulk loading of gateways and endpoints 
 ```bash
 USERNAME=bar
 PASSWORD=foo
@@ -19,4 +18,14 @@ GWPROFILE=STANDARD
 
 APP=FIELD_TEST_DEVICE
 ./load_ep.sh endpoints.csv $JWT $ORG $APP
+```
+
+Example of gateways.csv
+```bash
+name,TODO
+```
+
+Example of endpoints.csv
+```bash
+name,deveui,appkey,TODO
 ```
