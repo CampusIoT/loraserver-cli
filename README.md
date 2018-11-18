@@ -8,7 +8,15 @@
 ## Gateways and Endpoints Bulk Loading
 
 ```bash
+USERNAME=bar
+PASSWORD=foo
+ORG=1
+
 JWT=$(./get_jwt $USERNAME $PASSWORD)
-./load_gw.sh gateways.csv  $JWT $ORG  $GWPROFILE
+
+GWPROFILE=STANDARD
+./load_gw.sh gateways.csv  $JWT $ORG $GWPROFILE
+
+APP=FIELD_TEST_DEVICE
 ./load_ep.sh endpoints.csv $JWT $ORG $APP
 ```
