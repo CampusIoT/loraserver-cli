@@ -11,10 +11,12 @@ ORG=1
 JWT=$(./get_jwt $USERNAME $PASSWORD)
 
 GWPROFILE=STANDARD
-./load_gw.sh gateways.csv  $JWT $ORG $GWPROFILE
+./load_gateways.sh $JWT $ORG $GWPROFILE gateways.csv
+./list_gateways.sh $JWT $ORG $GWPROFILE
 
 APP=FIELD_TEST_DEVICE
-./load_ep.sh devices.csv $JWT $ORG $APP
+./load_devices.sh $JWT $ORG $APP devices.csv
+./list_devices.sh $JWT $ORG $APP
 ```
 
 Example of gateways.csv
