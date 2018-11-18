@@ -2,7 +2,7 @@
 
 
 
-## Bulk loading of gateways and endpoints 
+## Bulk loading of gateways and devices 
 ```bash
 USERNAME=bar
 PASSWORD=foo
@@ -14,7 +14,7 @@ GWPROFILE=STANDARD
 ./load_gw.sh gateways.csv  $JWT $ORG $GWPROFILE
 
 APP=FIELD_TEST_DEVICE
-./load_ep.sh endpoints.csv $JWT $ORG $APP
+./load_ep.sh devices.csv $JWT $ORG $APP
 ```
 
 Example of gateways.csv
@@ -22,7 +22,7 @@ Example of gateways.csv
 name,TODO
 ```
 
-Example of endpoints.csv
+Example of devices.csv
 ```bash
 name,deveui,appkey,TODO
 ```
