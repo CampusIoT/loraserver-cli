@@ -54,7 +54,7 @@ HEAD="${CURL} -X HEAD --header \""$ACCEPT_JSON"\""
 # https://stedolan.github.io/jq/manual/
 
 ${GET} --header "$AUTH" --header "$CONTENT_JSON"  ${URL}/api/applications?limit=9999 > .applications.json
-jq '.result' .applications.json
+#jq '.result' .applications.json
 #jq '.result[] | select(.name == "FTD") | .id | tonumber' .applications.json
 APPID=$(jq '.result[] | select(.name == "'$APPNAME'") | .id | tonumber' .applications.json)
 
@@ -69,6 +69,9 @@ OLDIFS=$IFS
 IFS=","
 while read NAME DESCR DEVEUI APPKEY
  do
+   echo Register: $NAME $DESCR $DEVEUI $APPKEY
+   echo    --data '{"device":{"name":"'$NAME'","description":"'$DESCR'","devEUI":"'$DEVEUI'","deviceProfileID":'$PROFID',"applicationID":"'$APPID'"}}'
+
    ${POST} --header "$AUTH" --header "$CONTENT_JSON"  "${URL}/api/devices" \
    --data '{"device":{"name":"'$NAME'","description":"'$DESCR'","devEUI":"'$DEVEUI'","deviceProfileID":'$PROFID',"applicationID":"'$APPID'"}}'
 
