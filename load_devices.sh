@@ -9,10 +9,12 @@ if [[ $# -ne 4 ]] ; then
     exit 1
 fi
 
-JWT="$1"
+TOKEN="$1"
 APPNAME="$2"
 PROFNAME="$3"
 CSVFILE="$4"
+
+AUTH="Grpc-Metadata-Authorization: Bearer $TOKEN"
 
 # Installation
 if ! [ -x "$(command -v jq)" ]; then
@@ -52,7 +54,7 @@ HEAD="${CURL} -X HEAD --header \""$ACCEPT_JSON"\""
 # https://stedolan.github.io/jq/manual/
 
 ${GET} --header "$AUTH" --header "$CONTENT_JSON"  ${URL}/api/applications?limit=9999 > .applications.json
-#jq '.result' .applications.json
+jq '.result' .applications.json
 #jq '.result[] | select(.name == "FTD") | .id | tonumber' .applications.json
 APPID=$(jq '.result[] | select(.name == "'$APPNAME'") | .id | tonumber' .applications.json)
 
