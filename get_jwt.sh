@@ -4,8 +4,8 @@
 # Written by CampusIoT Dev Team, 2016-2018
 
 # Parameters
-if [[ $# -eq 0 ]] ; then
-    echo 'Usage: $0 USERNAME PASSWORD'
+if [[ $# -ne 2 ]] ; then
+    echo "Usage: $0 USERNAME PASSWORD"
     exit 1
 fi
 USERNAME=$1
@@ -41,7 +41,8 @@ URL_SWAGGER=${URL}/swagger/api.swagger.json
 
 # Operations
 # CURL="curl --verbose"
-CURL="curl -k --verbose --insecure"
+#CURL="curl -k --verbose --insecure"
+CURL="curl -k --insecure"
 GET="${CURL} -X GET --header \""$ACCEPT_JSON"\""
 POST="${CURL} -X POST --header \""$ACCEPT_JSON"\""
 PUT="${CURL} -X PUT --header \""$ACCEPT_JSON"\""
