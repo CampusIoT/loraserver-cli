@@ -4,8 +4,8 @@
 # Written by CampusIoT Dev Team, 2016-2018
 
 # Parameters
-if [[ $# -eq 0 ]] ; then
-    echo 'Usage: $0 JWT APP_NAME DEV_PROFILE_NAME CSVFILE'
+if [[ $# -ne 4 ]] ; then
+    echo "Usage: $0 JWT APP_NAME DEV_PROFILE_NAME CSVFILE"
     exit 1
 fi
 
