@@ -2,7 +2,7 @@
 
 
 
-## Bulk loading of gateways and devices 
+## Bulk loading of gateways and devices
 ```bash
 USERNAME=bar
 PASSWORD=foo
@@ -10,23 +10,23 @@ ORG=1
 
 JWT=$(./get_jwt $USERNAME $PASSWORD)
 
-GWPROFILE=STANDARD
-./load_gateways.sh $JWT $ORG $GWPROFILE gateways.csv
-./list_gateways.sh $JWT $ORG $GWPROFILE
+APP_NAME="FTD"
+DEV_PROFILE_NAME="FTD"
+./load_devices.sh $JWT $APP_NAME $DEV_PROFILE_NAME devices.csv
+./list_devices.sh $JWT $APP_NAME $DEV_PROFILE_NAME
 
-APP=FIELD_TEST_DEVICE
-./load_devices.sh $JWT $ORG $APP devices.csv
-./list_devices.sh $JWT $ORG $APP
-```
+GWPROFILE=STANDARD
+./load_gateways.sh $JWT $ORG $GW_PROFILE gateways.csv
+./list_gateways.sh $JWT $ORG $GW_PROFILE
 
 Example of gateways.csv
 ```bash
-name,TODO
+name,description,gwid,latitude,longitude,altitude
 ```
 
 Example of devices.csv
 ```bash
-name,deveui,appkey,TODO
+name,description,deveui,appkey
 ```
 
 ## Useful utilities
