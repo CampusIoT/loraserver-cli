@@ -57,19 +57,19 @@ HEAD="${CURL} -X HEAD --header \""$ACCEPT_JSON"\""
 
 # https://stedolan.github.io/jq/manual/
 
-${GET} --header "$AUTH" --header "$CONTENT_JSON"  ${URL}/api/applications?limit=9999 --output .applications.json
+${GET} --header "$AUTH" --header "$CONTENT_JSON"  ${URL}/api/applications?limit=9999 > .applications.json
 #jq '.result' .applications.json
 #jq '.result[] | select(.name == "FTD") | .id | tonumber' .applications.json
 APPID=$(jq '.result[] | select(.name == "'$APPNAME'") | .id | tonumber' .applications.json)
 
-${GET} --header "$AUTH" --header "$CONTENT_JSON"  "${URL}/api/device-profiles?limit=999&applicationID=$APPID" --output .device-profiles.json
+${GET} --header "$AUTH" --header "$CONTENT_JSON"  "${URL}/api/device-profiles?limit=999&applicationID=$APPID" > .device-profiles.json
 #jq '.result' device-profiles.json
 #jq '.result[] | select(.name == "FTD")' .device-profiles.json
 #jq '.result[] | select(.name == "FTD") | .id' .device-profiles.json
 PROFID=$(jq '.result[] | select(.name == "'$PROFNAME'") | .id' .device-profiles.json)
 echo $PROFID
 
-#${GET} --header "$AUTH" --header "$CONTENT_JSON"  "${URL}/api/devices?limit=9999&applicationID=$APPID" --output .devices.json
+#${GET} --header "$AUTH" --header "$CONTENT_JSON"  "${URL}/api/devices?limit=9999&applicationID=$APPID" > .devices.json
 #jq '.result' .devices.json
 
 OLDIFS=$IFS
