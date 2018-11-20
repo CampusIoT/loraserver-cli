@@ -59,11 +59,11 @@ HEAD="${CURL} -X HEAD --header \""$ACCEPT_JSON"\""
 
 ${GET} --header "$AUTH" --header "$CONTENT_JSON"  "${URL}/api/network-servers?limit=9999" > .networkservers.json
 NSID=$(jq '.result[] | select(.name == "'$NSNAME'") | .id | tonumber' .networkservers.json)
-echo $NSID
+#echo $NSID
 
 ${GET} --header "$AUTH" --header "$CONTENT_JSON"  "${URL}/api/gateway-profiles?limit=9999&networkServerID=$NSID" > .gateway-profiles.json
 GWPROFID=$(jq '.result[] | select(.name == "'$GWPROFNAME'") | .id' .gateway-profiles.json)
-echo $GWPROFID
+#echo $GWPROFID
 
 OLDIFS=$IFS
 IFS=","
