@@ -4,7 +4,7 @@
 # Written by CampusIoT Dev Team, 2016-2018
 
 # Parameters
-if [[ $# -ne 4 ]] ; then
+if [[ $# -ne 5 ]] ; then
     echo "Usage: $0 JWT ORGID NSNAME GWPROFNAME CSVFILE"
     exit 1
 fi
@@ -13,6 +13,7 @@ TOKEN="$1"
 ORGID="$2"
 NSNAME="$3"
 GWPROFNAME="$4"
+CSVFILE="$5"
 
 AUTH="Grpc-Metadata-Authorization: Bearer $TOKEN"
 #sudo npm install -g jwt-cli
@@ -56,11 +57,11 @@ HEAD="${CURL} -X HEAD --header \""$ACCEPT_JSON"\""
 
 # https://stedolan.github.io/jq/manual/
 
-${GET} --header "$AUTH" --header "$CONTENT_JSON"  "${URL}/api/network-servers?limit=999&applicationID=$APPID" --output .networkservers.json
-NSID=$(jq '.result[] | select(.name == "'$NSNAME'") | .id' .networkservers.json)
+${GET} --header "$AUTH" --header "$CONTENT_JSON"  "${URL}/api/network-servers?limit=9999" > .networkservers.json
+NSID=$(jq '.result[] | select(.name == "'$NSNAME'") | .id | tonumber' .networkservers.json)
 echo $NSID
 
-${GET} --header "$AUTH" --header "$CONTENT_JSON"  "${URL}/api/gateway-profiles?limit=999&networkServerID=$NSID" --output .gateway-profiles.json
+${GET} --header "$AUTH" --header "$CONTENT_JSON"  "${URL}/api/gateway-profiles?limit=9999&networkServerID=$NSID" > .gateway-profiles.json
 GWPROFID=$(jq '.result[] | select(.name == "'$GWPROFNAME'") | .id' .gateway-profiles.json)
 echo $GWPROFID
 
@@ -69,12 +70,12 @@ IFS=","
 while read NAME DESCR GWID LATITUDE LONGITUDE
  do
    echo; echo Create gateway: $NAME $DESCR $GWID $LATITUDE $LONGITUDE
-   echo '{"gateway":{"location":{"latitude":'$LATITUDE',"longitude":'$LONGITUDE'},"name":"'$NAME'","description":"'$DESCR'","id":"'$GWID'","gatewayProfileID":"'$GWPROFID'","networkServerID":"'$NSID'","discoveryEnabled":true,"organizationID":"'$ORGID'"}}' > .gateway-$GWID.json
+   echo '{"gateway":{"location":{"latitude":'$LATITUDE',"longitude":'$LONGITUDE'},"name":"'$NAME'","description":"'$DESCR'","id":"'$GWID'","gatewayProfileID":'$GWPROFID',"networkServerID":'$NSID',"discoveryEnabled":true,"organizationID":'$ORGID'}}' > .gateway-$GWID.json
    curl -s --insecure --data "@.gateway-$GWID.json" --header "$AUTH" --header "$CONTENT_JSON"  "${URL}/api/gateways"
  done < $CSVFILE
 IFS=$OLDIFS
 
 echo;
 
-#${GET} --header "$AUTH" --header "$CONTENT_JSON"  "${URL}/api/devices?limit=9999&applicationID=$APPID" --output .devices.json
-#jq '.result' .devices.json
+#${GET} --header "$AUTH" --header "$CONTENT_JSON"  "${URL}/api/gateways?limit=9999" > .gateways.json
+#jq '.result' .gateways.json

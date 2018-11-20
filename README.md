@@ -4,29 +4,29 @@
 ```bash
 USERNAME=bar
 PASSWORD=foo
-ORG=1
 
 JWT=$(./get_jwt $USERNAME $PASSWORD)
 
 APP_NAME="FTD"
 DEV_PROFILE_NAME="CLASS_A_OTAA"
 ./load_devices.sh $JWT $APP_NAME $DEV_PROFILE_NAME devices.csv
-./list_devices.sh $JWT $APP_NAME $DEV_PROFILE_NAME
+# TBI ./list_devices.sh $JWT $APP_NAME $DEV_PROFILE_NAME
 
-GW_PROFILE="DEFAULT"
-./load_gateways.sh $JWT $ORG $GW_PROFILE gateways.csv
-./list_gateways.sh $JWT $ORG $GW_PROFILE
+ORGID=1
+NS_NAME="loraserver"
+GW_PROFILE_NAME="DEFAULT"
+./load_gateways.sh $JWT $ORGID $NS_NAME $GW_PROFILE_NAME gateways.csv
+# TBI ./list_gateways.sh $JWT $ORGID $NS_NAME $GW_PROFILE_NAME
 ```
-
-Example of gateways.csv
-```
-name,description,gwid,latitude,longitude,altitude
-```
-
 Example of devices.csv
 ```
 name,description,deveui,appkey
 ```
+Example of gateways.csv
+```
+name,description,gwid,latitude,longitude
+```
+
 
 ## Useful utilities
 * https://www.npmjs.com/package/csvtojson
