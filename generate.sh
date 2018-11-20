@@ -24,10 +24,3 @@ chmod +x client.sh
 ./client.sh --help
 ./client.sh --about
 ./client.sh --insecure --host https://lora.campusiot.imag.fr/api list --help
-
-
-
-
-$ output/petstore-cli --host http://petstore.swagger.io --content-type json --dry-run addPet id:=891 name==lucky status==available
-
-curl -sS --tlsv1.2 -H 'Content-type: application/json' -X POST -d '{"name": "lucky", "status": "available", "id": 891}' "http://petstore.swagger.io/v2/pet"
