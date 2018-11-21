@@ -5,7 +5,7 @@
 USERNAME=bar
 PASSWORD=foo
 
-JWT=$(./get_jwt $USERNAME $PASSWORD)
+JWT=$(./get_jwt.sh $USERNAME $PASSWORD)
 
 APP_NAME="FTD"
 DEV_PROFILE_NAME="CLASS_A_OTAA"
@@ -31,6 +31,7 @@ name,description,gwid,latitude,longitude
 ## Useful utilities
 * https://www.npmjs.com/package/csvtojson
 * https://www.npmjs.com/package/jsontocsv
+* https://stedolan.github.io/jq/manual/
 
 ```bash
 sudo npm install -g csvtojson
@@ -39,6 +40,9 @@ sudo npm install -g jsontocsv
 jsontocsv --help
 ```
 
+```bash
+jq '[.[] | {"name":.name, "deveui":.deveui, "appkey":.appkey}]'  fulldevices.json > devices.json
+```
 
 ## @Deprecated: Generate the bash client and HTML doc with Swagger CodeGen
 Deprecated since the generated client had several times the same function for operations with the same name (ie list, delete, ...)
