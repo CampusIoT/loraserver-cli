@@ -3,7 +3,7 @@
 ## Bulk loading of gateways and devices
 ```bash
 USERNAME=bar
-PASSWORD=foo
+PASSWORD=__MY_VERY_SECRET_PASSWORD__
 
 JWT=$(./get_jwt.sh $USERNAME $PASSWORD)
 
@@ -43,6 +43,9 @@ jsontocsv --help
 ```bash
 jq '[.[] | {"name":.name, "deveui":.deveui, "appkey":.appkey}]'  fulldevices.json > devices.json
 ```
+
+### TODOLIST
+* ./load_devices_abp.sh
 
 ## @Deprecated: Generate the bash client and HTML doc with Swagger CodeGen
 Deprecated since the generated client had several times the same function for operations with the same name (ie list, delete, ...)
