@@ -3,6 +3,10 @@
 # Copyright (C) CampusIoT,  - All Rights Reserved
 # Written by CampusIoT Dev Team, 2016-2018
 
+# ------------------------------------------------
+# Add new devices in an application
+# ------------------------------------------------
+
 # Parameters
 if [[ $# -ne 4 ]] ; then
     echo "Usage: $0 JWT APP_NAME DEV_PROFILE_NAME CSVFILE"

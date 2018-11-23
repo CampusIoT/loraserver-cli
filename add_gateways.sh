@@ -3,6 +3,10 @@
 # Copyright (C) CampusIoT,  - All Rights Reserved
 # Written by CampusIoT Dev Team, 2016-2018
 
+# ------------------------------------------------
+# Add new gateways in an organization
+# ------------------------------------------------
+
 # Parameters
 if [[ $# -ne 5 ]] ; then
     echo "Usage: $0 JWT ORGID NSNAME GWPROFNAME CSVFILE"
