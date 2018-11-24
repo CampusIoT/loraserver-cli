@@ -24,8 +24,8 @@ sendMail() {
   SUBJECT="Votre compte CampusIoT"
   SMTP_SERVER="smtps.univ-grenoble-alpes.fr:587"
 
-  echo "subject:$SUBJECT\n\n$URL\n$USERNAME\n$PASSWORD" | \
-    swaks --to $EMAIL -s $SMTP_SERVER -tls -au $MAIL_USERNAME -ap $MAIL_PASSWORD
+  swaks --to $EMAIL -s $SMTP_SERVER -tls -au $MAIL_USERNAME -ap $MAIL_PASSWORD \
+        --header "Subject: $SUBJECT" --body "$URL\n$USERNAME\n$PASSWORD"
 }
 
 TOKEN="$1"
