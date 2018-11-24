@@ -8,14 +8,31 @@
 # ------------------------------------------------
 
 # Parameters
-if [[ $# -ne 3 ]] ; then
-    echo "Usage: $0 JWT ORGID CSVFILE"
+if [[ $# -ne 5 ]] ; then
+    echo "Usage: $0 JWT ORGID CSVFILE MAIL_USERNAME MAIL_PASSWORD"
     exit 1
 fi
+
+sendMail() {
+  MAIL_USERNAME=$1
+  MAIL_PASSWORD=$2
+  EMAIL=$3
+  USERNAME=$4
+  PASSWORD=$5
+
+  URL="https://lora.campusiot.imag.fr "
+  SUBJECT="Votre compte CampusIoT"
+  SMTP_SERVER="smtps.univ-grenoble-alpes.fr:587"
+
+  echo "subject:$SUBJECT\n\n$URL\n$USERNAME\n$PASSWORD" | \
+    swaks --to $EMAIL -s $SMTP_SERVER -tls -au $MAIL_USERNAME -ap $MAIL_PASSWORD
+}
 
 TOKEN="$1"
 ORGID="$2"
 CSVFILE="$3"
+MAIL_USERNAME="$4"
+MAIL_PASSWORD="$5"
 
 AUTH="Grpc-Metadata-Authorization: Bearer $TOKEN"
 #sudo npm install -g jwt-cli
@@ -30,6 +47,11 @@ fi
 if ! [ -x "$(command -v curl)" ]; then
   echo 'curl is not installed. Installing curl ...'
   sudo apt-get install -y curl
+fi
+
+if ! [ -x "$(command -v swaks)" ]; then
+  echo 'curl is not installed. Installing curl ...'
+  sudo apt-get install -y swaks
 fi
 
 # Content-Type
@@ -65,7 +87,9 @@ while read USERNAME PASSWORD EMAIL ISADMIN NOTE
    echo '{"organizations":[{"isAdmin":'$ISADMIN',"organizationID":"'$ORGID'"}],"password":"'$PASSWORD'","user":{"username":"'$USERNAME'","email":"'$EMAIL'","note":"'$NOTE'","password":"'$PASSWORD'","isAdmin":'$ISADMIN',"isActive":true}}' > .user-$USERNAME.json
    curl -s --insecure --data "@.user-$USERNAME.json" --header "$AUTH" --header "$CONTENT_JSON"  "${URL}/api/users"
 
-   # TODO send email to $EMAIL
+   # send email to $EMAIL
+   sendMail $MAIL_USERNAME $MAIL_PASSWORD $EMAIL $USERNAME $PASSWORD
+
  done < $CSVFILE
 IFS=$OLDIFS
 
