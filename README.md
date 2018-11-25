@@ -22,7 +22,7 @@ GW_PROFILE_NAME="DEFAULT"
 # TBI ./list_gateways.sh $JWT $ORGID
 
 ORGID=1
-./add_users.sh $JWT $ORGID users.csv
+./add_users.sh $JWT $ORGID users.csv campusiot@univ-grenoble-alpes.fr __SUPER_SECRET_PASSWORD__
 # TBI ./list_users.sh $JWT $ORGID
 # TBI ./list_users.sh $JWT
 ```

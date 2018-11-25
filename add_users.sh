@@ -14,18 +14,18 @@ if [[ $# -ne 5 ]] ; then
 fi
 
 sendMail() {
-  MAIL_USERNAME=$1
-  MAIL_PASSWORD=$2
-  EMAIL=$3
-  USERNAME=$4
-  PASSWORD=$5
+  MAIL_USERNAME_=$1
+  MAIL_PASSWORD_=$2
+  EMAIL_=$3
+  USERNAME_=$4
+  PASSWORD_=$5
 
-  URL="https://lora.campusiot.imag.fr "
-  SUBJECT="Votre compte CampusIoT"
-  SMTP_SERVER="smtps.univ-grenoble-alpes.fr:587"
-
-  swaks --to $EMAIL -s $SMTP_SERVER -tls -au $MAIL_USERNAME -ap $MAIL_PASSWORD \
-        --header "Subject: $SUBJECT" --body "$URL\n$USERNAME\n$PASSWORD"
+  URL_="https://lora.campusiot.imag.fr "
+  SUBJECT_="Votre compte CampusIoT"
+  SMTP_SERVER_="smtps.univ-grenoble-alpes.fr:587"
+  BODY_="$URL_\n$USERNAME_\n$PASSWORD_"
+  swaks --to $EMAIL_ -s $SMTP_SERVER_ -tls -au $MAIL_USERNAME_ -ap $MAIL_PASSWORD_ \
+        --header "Subject: $SUBJECT_" --body "$BODY_"
 }
 
 TOKEN="$1"
@@ -86,7 +86,7 @@ while read USERNAME PASSWORD EMAIL ISADMIN NOTE
    echo; echo Create user: $USERNAME $PASSWORD $EMAIL $ISADMIN $NOTE
    echo '{"organizations":[{"isAdmin":'$ISADMIN',"organizationID":"'$ORGID'"}],"password":"'$PASSWORD'","user":{"username":"'$USERNAME'","email":"'$EMAIL'","note":"'$NOTE'","password":"'$PASSWORD'","isAdmin":'$ISADMIN',"isActive":true}}' > .user-$USERNAME.json
    curl -s --insecure --data "@.user-$USERNAME.json" --header "$AUTH" --header "$CONTENT_JSON"  "${URL}/api/users"
-
+   # TODO check code status
    # send email to $EMAIL
    sendMail $MAIL_USERNAME $MAIL_PASSWORD $EMAIL $USERNAME $PASSWORD
 
