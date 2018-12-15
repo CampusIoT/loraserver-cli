@@ -1,6 +1,6 @@
 # CLI for the LoRa App Server
 
-## Bulk loading of gateways and devices
+## Bulk loading of gateways, devices and users
 ```bash
 USERNAME=alice
 PASSWORD=__MY_VERY_SECRET_PASSWORD__
@@ -39,6 +39,17 @@ Example of users.csv
 username,password,email,isadmin,note
 ```
 
+## Create a new organization with a DEFAULT service-profile (for super-admin only)
+```bash
+./add_org.sh
+
+USERNAME=admin
+PASSWORD=__MY_VERY_SECRET_PASSWORD__
+
+JWT=$(./get_jwt.sh $USERNAME $PASSWORD)
+
+./add_org.sh $JWT IOT_TRAINING "Student training on LoRa" true
+```
 
 ## Useful utilities
 * https://www.npmjs.com/package/csvtojson
