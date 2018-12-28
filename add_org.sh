@@ -7,6 +7,9 @@
 # Add new organization
 # ------------------------------------------------
 
+# Default List of factory-preset frequencies (Hz), comma separated.
+EU868_FREQS="868100000,868300000,868500000,867100000,867300000,867500000,867700000,867900000"
+
 # Parameters
 if [[ $# -ne 4 ]] ; then
     echo "Usage: $0 JWT ORGNAME DISPLAYNAME CAN_HAVE_GATEWAYS"
@@ -75,5 +78,17 @@ echo; echo "Create service-profile: DEFAULT"
 curl -s --insecure "${URL}/api/service-profiles" \
  --header "$AUTH" --header "$CONTENT_JSON" \
  --data '{"serviceProfile":{"name":"DEFAULT","networkServerID":"1","addGWMetaData":true,"nwkGeoLoc":true,"devStatusReqFreq":48,"reportDevStatusBattery":true,"reportDevStatusMargin":true,"drMax":5,"organizationID":"'$ORGID'"}}'
+
+
+echo; echo "Create device-profile: CLASS_A_OTAA"
+curl -s --insecure  'https://lora.campusiot.imag.fr/api/device-profiles' \
+  --header "$AUTH" --header "$CONTENT_JSON" \
+  --data '{"deviceProfile":{"name":"CLASS_A_OTAA","networkServerID":"1","macVersion":"1.0.2","regParamsRevision":"A","supportsJoin":true,"organizationID":"'$ORGID'"}}'
+
+
+echo; echo "Create device-profile: CLASS_A_ABP"
+curl 'https://lora.campusiot.imag.fr/api/device-profiles' \
+  --header "$AUTH" --header "$CONTENT_JSON" \
+  --data '{"deviceProfile":{"name":"CLASS_A_ABP","networkServerID":"1","macVersion":"1.0.2","regParamsRevision":"A","factoryPresetFreqsStr":"'$EU868_FREQS'","factoryPresetFreqs":['$EU868_FREQS'],"organizationID":"'$ORGID'"}}'
 
 echo;
