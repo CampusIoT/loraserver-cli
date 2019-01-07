@@ -7,9 +7,10 @@ PASSWORD=__MY_VERY_SECRET_PASSWORD__
 
 JWT=$(./get_jwt.sh $USERNAME $PASSWORD)
 
+ORGID=1
 APP_NAME="FTD"
 DEV_PROFILE_NAME="CLASS_A_OTAA"
-./add_devices.sh $JWT $APP_NAME $DEV_PROFILE_NAME devices.csv
+./add_devices.sh $JWT $ORGID $APP_NAME $DEV_PROFILE_NAME devices.csv
 # TBI ./list_devices.sh $JWT $APP_NAME
 # TBI ./list_devices.sh $JWT
 

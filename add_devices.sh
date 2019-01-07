@@ -8,7 +8,7 @@
 # ------------------------------------------------
 
 # Parameters
-if [[ $# -ne 4 ]] ; then
+if [[ $# -ne 5 ]] ; then
     echo "Usage: $0 JWT ORGID APP_NAME DEV_PROFILE_NAME CSVFILE"
     exit 1
 fi
