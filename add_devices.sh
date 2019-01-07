@@ -9,14 +9,15 @@
 
 # Parameters
 if [[ $# -ne 4 ]] ; then
-    echo "Usage: $0 JWT APP_NAME DEV_PROFILE_NAME CSVFILE"
+    echo "Usage: $0 JWT ORGID APP_NAME DEV_PROFILE_NAME CSVFILE"
     exit 1
 fi
 
 TOKEN="$1"
-APPNAME="$2"
-PROFNAME="$3"
-CSVFILE="$4"
+ORGID="$2"
+APPNAME="$3"
+PROFNAME="$4"
+CSVFILE="$5"
 
 
 AUTH="Grpc-Metadata-Authorization: Bearer $TOKEN"
@@ -60,8 +61,7 @@ OPTIONS="${CURL} -X OPTIONS --header \""$ACCEPT_JSON"\""
 HEAD="${CURL} -X HEAD --header \""$ACCEPT_JSON"\""
 
 # https://stedolan.github.io/jq/manual/
-
-${GET} --header "$AUTH" --header "$CONTENT_JSON"  ${URL}/api/applications?limit=9999 > .applications.json
+${GET} --header "$AUTH" --header "$CONTENT_JSON"  "${URL}/api/applications?limit=9999&organizationID=$ORGID" > .applications.json
 #jq '.result' .applications.json
 #jq '.result[] | select(.name == "FTD") | .id | tonumber' .applications.json
 APPID=$(jq '.result[] | select(.name == "'$APPNAME'") | .id | tonumber' .applications.json)
